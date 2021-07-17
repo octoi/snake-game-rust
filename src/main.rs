@@ -10,6 +10,7 @@ use piston::event_loop::*;
 use piston::input::*;
 use piston::window::WindowSettings;
 
+#[derive(Clone, PartialEq)]
 enum Direction {
     Right,
     Left,
@@ -35,6 +36,18 @@ impl Game {
 
     fn update(&mut self) {
         self.snake.update();
+    }
+
+    fn pressed(&mut self, btn: &Button) {
+        let last_direction = self.snake.dir.clone();
+
+        self.snake.dir = match btn {
+            &Button::Keyboard(Key::Up) if last_direction != Direction::Down => Direction::Up,
+            &Button::Keyboard(Key::Down) if last_direction != Direction::Up => Direction::Down,
+            &Button::Keyboard(Key::Left) if last_direction != Direction::Right => Direction::Left,
+            &Button::Keyboard(Key::Right) if last_direction != Direction::Left => Direction::Right,
+            _ => last_direction,
+        };
     }
 }
 
@@ -94,6 +107,12 @@ fn main() {
 
         if let Some(u) = e.update_args() {
             game.update();
+        }
+
+        if let Some(k) = e.button_args() {
+            if k.state == ButtonState::Press {
+                game.pressed(&k.button);
+            }
         }
     }
 }
