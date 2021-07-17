@@ -27,8 +27,6 @@ pub struct Game {
 
 impl Game {
     fn render(&mut self, args: &RenderArgs) {
-        use graphics;
-
         const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
 
         self.gl.draw(args.viewport(), |c, gl| {
@@ -101,8 +99,6 @@ pub struct Snake_Piece(u32, u32);
 
 impl Snake {
     pub fn render(&mut self, args: &RenderArgs) {
-        use graphics;
-
         const RED: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
 
         let squares: Vec<graphics::types::Rectangle> = self
