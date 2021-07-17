@@ -9,6 +9,16 @@ use piston::event_loop::*;
 use piston::input::*;
 use piston::window::WindowSettings;
 
+struct Game {
+    gl: GlGraphics,
+}
+
+impl Game {
+    fn render(&mut self, arg: &RenderArgs) {
+        use graphics;
+    }
+}
+
 fn main() {
     let opengl = OpenGL::V3_2;
 
@@ -17,4 +27,11 @@ fn main() {
         .exit_on_esc(true)
         .build()
         .unwrap();
+
+    let mut events = Events::new(EventSettings::new()).ups(10);
+    while let Some(e) = events.next(&mut window) {
+        if let Some(r) = e.render_args() {
+            // game.render(&r);
+        }
+    }
 }
