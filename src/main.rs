@@ -12,17 +12,29 @@ use piston::window::WindowSettings;
 
 struct Game {
     gl: GlGraphics,
+    // snake: Snake,
 }
 
 impl Game {
     fn render(&mut self, arg: &RenderArgs) {
-        use graphics;
+        // use graphics;
 
-        let GREEN: [f32; 4] = [0.0, 0.1, 0.0, 1.0];
+        let GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
 
         self.gl.draw(arg.viewport(), |_c, gl| {
             graphics::clear(GREEN, gl);
         });
+    }
+}
+
+struct Snake {
+    pos_x: i32,
+    pos_y: i32,
+}
+
+impl Snake {
+    fn render(&self, gl: &mut GlGraphics, args: &RenderArgs) {
+        // use graphics;
     }
 }
 
