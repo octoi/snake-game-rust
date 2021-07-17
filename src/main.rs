@@ -4,6 +4,7 @@ extern crate opengl_graphics;
 extern crate piston;
 
 use glutin_window::GlutinWindow;
+use graphics::clear;
 use opengl_graphics::{GlGraphics, OpenGL};
 use piston::event_loop::*;
 use piston::input::*;
@@ -16,6 +17,12 @@ struct Game {
 impl Game {
     fn render(&mut self, arg: &RenderArgs) {
         use graphics;
+
+        let GREEN: [f32; 4] = [0.0, 0.1, 0.0, 1.0];
+
+        self.gl.draw(arg.viewport(), |_c, gl| {
+            graphics::clear(GREEN, gl);
+        });
     }
 }
 
@@ -28,10 +35,14 @@ fn main() {
         .build()
         .unwrap();
 
+    let mut game = Game {
+        gl: GlGraphics::new(opengl),
+    };
+
     let mut events = Events::new(EventSettings::new()).ups(10);
     while let Some(e) = events.next(&mut window) {
         if let Some(r) = e.render_args() {
-            // game.render(&r);
+            game.render(&r);
         }
     }
 }
